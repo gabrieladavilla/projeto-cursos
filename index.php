@@ -4,12 +4,12 @@
     include "req/database.php";
 
     try {
-        $conexao = new PDO($dsn, $db_user, $db_pass);
 
         $query = $conexao->query('SELECT * FROM cursos');
 
         $cursos = $query->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($cursos);
+        $conexao = null;
+
 
     }  catch ( PDOException $Exception ) {
         echo $Exception->getMessage();
@@ -57,8 +57,8 @@
                             <h4> Curso de: <?php echo $infosCurso['tag'] ?> </h4>
                             <h4> Preço: R$ <?php echo $infosCurso['preco']; ?> </h4>
                             <form action="validarCompra.php" method="post">
-                                <input type="hidden" name="nomeCurso" value="<?php echo $nomeCurso; ?>">
-                                <input type="hidden" name="precoCurso" value="<?php echo $infosCurso[1]; ?>">
+                                <input type="hidden" name="nomeCurso" value="<?php echo $infosCurso['nome']; ?>">
+                                <input type="hidden" name="precoCurso" value="<?php echo $infosCurso['preco']; ?>">
                                 <div class="input-group col-md-5">
                                     <label for="nomeCompleto">Nome Completo</label>
                                     <input id="nomeCompleto" name="nomeCompleto" type="text" class="form-control">

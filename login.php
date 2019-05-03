@@ -1,4 +1,5 @@
 <?php
+    require "req/database.php";
     require "req/funcoeslogin.php";
     include "inc/head.php";
 
@@ -7,17 +8,17 @@
         $email = $_REQUEST["email"];
         $senha = $_REQUEST ["senha"];
         //verificando se o usuario esta logado atraves da funcao
-        $nomeLogado = logarUsuario($email, $senha);
+        $infoLogado = logarUsuario($email, $senha);
         
-        if ($nomeLogado == true){
+        if ($infoLogado == true){
             //criando a sessao
             session_start();
             //criando sessao pra nome
-            $_SESSION["nome"] = $nomeLogado;
+            $_SESSION["nome"] = $infoLogado['nomeUsuario'];
             //criando o campo email
             $_SESSION ["email"] = $email;
             //criando campo nivel de acesso
-            $_SESSION["nivelAcesso"] = mt_rand(0, 1);
+            $_SESSION["nivelAcesso"] = $infoLogado['tipoUsuario'];
             //campo logadp na sessao
             $_SESSION["logado"] = true;
             //redirecionando o usuario para o index.php
